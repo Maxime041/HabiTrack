@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habitrack/model/habit.dart';
+import 'package:habitrack/pages/add_habit_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
       totalCompletions: 20,
       lastCompleted: DateTime.now(),
     ),
-    
+
   ];
 
   int getMaxStreak() {
@@ -61,6 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
       }
     }
     return completed;
+  }
+
+  void addHabit(String habitName) {
+    setState(() {
+      habits.add(Habit(
+        name: habitName,
+        lastCompleted: DateTime.now(),
+      ));
+    });
   }
 
   @override
@@ -285,7 +295,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => AddHabitPage(
+                        onAddHabit: addHabit,
+                      ),
+                    ));
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blue[600],
                     shape: RoundedRectangleBorder(
