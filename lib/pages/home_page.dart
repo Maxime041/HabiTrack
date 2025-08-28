@@ -338,6 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white,
+                                    decoration: habit.isCompleted ? TextDecoration.lineThrough : null,
                                   ),
                                 ),
                                 SizedBox(height: 4),
