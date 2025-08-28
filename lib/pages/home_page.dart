@@ -73,6 +73,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+void removeHabit(String habitName) {
+  setState(() {
+    int i = 0;
+    for (i = 0; i < habits.length; i++) {
+      if (habits[i].name == habitName) {
+        habits.removeAt(i);
+        break; 
+      }
+    }
+  });
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -282,6 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               setState(() {});
                             },
                           ),
+                          IconButton(onPressed: () => removeHabit(habit.name), icon: Icon(Icons.delete, color: Colors.red)),
                         ],
                       ),
                     );
