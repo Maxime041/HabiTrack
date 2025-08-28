@@ -31,6 +31,14 @@ class _MyHomePageState extends State<MyHomePage> {
       totalCompletions: 12,
       lastCompleted: DateTime.now().subtract(Duration(days: 2)),
     ),
+    Habit(
+      name: 'Méditer 10 minutes',
+      isCompleted: true,
+      streak: 7,
+      totalCompletions: 20,
+      lastCompleted: DateTime.now(),
+    ),
+    
   ];
 
   int getMaxStreak() {
@@ -75,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
 
               SizedBox(height: 40),
-              
+
               Row(
                 children: [
                   Expanded(
@@ -176,7 +184,8 @@ class _MyHomePageState extends State<MyHomePage> {
                         children: [
                           CircleAvatar(
                             radius: 20,
-                            backgroundColor: Colors.orange[300]!.withOpacity(0.1),
+                            backgroundColor:
+                                Colors.orange[300]!.withOpacity(0.1),
                             child: Icon(
                               Icons.check_circle,
                               color: Colors.orange[300],
@@ -206,9 +215,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              
+
               SizedBox(height: 30),
-              
+
               Text(
                 "Mes habitudes",
                 style: TextStyle(
@@ -217,9 +226,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              
+
               SizedBox(height: 16),
-              
+
               Expanded(
                 child: ListView.builder(
                   itemCount: habits.length,
@@ -260,15 +269,49 @@ class _MyHomePageState extends State<MyHomePage> {
                           Checkbox(
                             value: habit.isCompleted,
                             onChanged: (value) {
-                              setState(() {
-
-                              });
+                              setState(() {});
                             },
                           ),
                         ],
                       ),
                     );
                   },
+                ),
+              ),
+
+              SizedBox(height: 20),
+
+              Container(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue[600],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 24,
+                      ),
+                      SizedBox(width: 12),
+                      Text(
+                        'Ajouter une habitude',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
