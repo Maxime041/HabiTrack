@@ -42,6 +42,69 @@ class _MyHomePageState extends State<MyHomePage> {
 
   ];
 
+  // ia
+  @override
+  void initState() {
+    super.initState();
+    resetHabitsIfNewDay();
+  }
+
+ // ia
+ void resetHabitsIfNewDay() {
+    DateTime today = DateTime.now();
+    
+    for (int i = 0; i < habits.length; i++) {
+      DateTime lastDay = habits[i].lastCompleted;
+      
+      int differenceInDays = today.difference(lastDay).inDays;
+      
+      if (today.day != lastDay.day || today.month != lastDay.month || today.year != lastDay.year) {
+        habits[i].isCompleted = false;
+        
+        if (differenceInDays > 1) {
+          habits[i].streak = 0;
+        }
+      }
+    }
+    setState(() {});
+  }
+
+  // ia
+  void toggleHabit(int index) {
+    setState(() {
+      if (habits[index].isCompleted == false) {
+        DateTime today = DateTime.now();
+        DateTime lastDay = habits[index].lastCompleted;
+        int differenceInDays = today.difference(lastDay).inDays;
+        
+        habits[index].isCompleted = true;
+        habits[index].totalCompletions = habits[index].totalCompletions + 1;
+        habits[index].lastCompleted = today;
+        
+        if (differenceInDays == 1 || differenceInDays == 0) {
+          habits[index].streak += 1;
+        } 
+        else {
+          habits[index].streak = 1;
+        }
+      } 
+      else 
+      {
+        habits[index].isCompleted = false;
+        habits[index].totalCompletions = habits[index].totalCompletions - 1;
+        habits[index].streak = habits[index].streak - 1;
+        
+        if (habits[index].totalCompletions < 0) {
+          habits[index].totalCompletions = 0;
+        }
+        if (habits[index].streak < 0) {
+          habits[index].streak = 0;
+        }
+      }
+    });
+  }
+  
+
   int getMaxStreak() {
     int max = 0;
     int i = 0;
@@ -73,17 +136,17 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-void removeHabit(String habitName) {
-  setState(() {
-    int i = 0;
-    for (i = 0; i < habits.length; i++) {
-      if (habits[i].name == habitName) {
-        habits.removeAt(i);
-        break; 
+  void removeHabit(String habitName) {
+    setState(() {
+      int i = 0;
+      for (i = 0; i < habits.length; i++) {
+        if (habits[i].name == habitName) {
+          habits.removeAt(i);
+          break; 
+        }
       }
-    }
-  });
-}
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -291,7 +354,7 @@ void removeHabit(String habitName) {
                           Checkbox(
                             value: habit.isCompleted,
                             onChanged: (value) {
-                              setState(() {});
+                              toggleHabit(index);
                             },
                           ),
                           IconButton(onPressed: () => removeHabit(habit.name), icon: Icon(Icons.delete, color: Colors.red)),
